@@ -35,6 +35,8 @@ run 'bundle install'
 # generators
 inject_into_file 'config/application.rb', :after => "config.filter_parameters += [:password]" do
 	<<-RUBY
+	
+	
 		config.generators do |g|
 			g.template_engine :haml
 			g.test_framework :rspec, fixture: true, views: false
@@ -46,22 +48,22 @@ end
 # devise
 model_name = 'User'
 generate 'devise:install'
-genetate 'devise', model_name
-genetate 'devise:views'
+generate "devise", model_name
+generate 'devise:views'
 
 # cancan
-genetate 'cancan:ability'
+generate 'cancan:ability'
 
 # simple_form
-genetate 'simple_form:install'
+generate 'simple_form:install'
 
 # nifty-generators
-genetate 'nifty:config'
-genetate 'nifty:layout --haml'
+generate 'nifty:config'
+generate 'nifty:layout --haml'
 remove_file 'app/views/layouts/application.html.erb'
 
 # rspec
-genetate 'rspec:install'
+generate 'rspec:install'
 
 create_file 'spec/support/devise.rb' do
   <<-RUBY
@@ -73,7 +75,7 @@ end
 
 create_file 'spec/support/factory_girl.rb' do
   <<-RUBY
-    Rspec.configure do |config|
+    RSpec.configure do |config|
       config.include Factory::Syntax::Methods
     end
   RUBY
