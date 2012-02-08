@@ -1,5 +1,7 @@
-create_file ".rvmrc", "rvm gemset use #{app_name} --create"
-run "rvm use 1.9.3@#{app_name}"
+# =================
+# = Create .rvmrc =
+# =================
+create_file ".rvmrc", "rvm gemset use 1.9.3#{app_name} --create"
 
 # ========
 # = Gems =
