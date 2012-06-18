@@ -14,7 +14,6 @@ gem 'twitter-bootstrap-rails', git: 'git://github.com/seyhunak/twitter-bootstrap
 gem 'haml_coffee_assets', group: :assets
 
 gem "haml-rails", group: :development
-gem "nifty-generators", group: :development
 
 gem "pry", group: [:development, :test]
 
@@ -29,6 +28,15 @@ run 'bundle install'
 # =================
 # = Configuration =
 # =================
+
+# DB
+rake "db:create", :env => 'development'
+rake "db:create", :env => 'test'
+
+run "db:migrate"
+
+run 'cp config/database.yml config/database.example'
+run "echo 'config/database.yml' >> .gitignore"
 
 # generators
 inject_into_file 'config/application.rb', :after => "config.filter_parameters += [:password]" do
@@ -52,13 +60,13 @@ generate 'devise:views'
 # cancan
 generate 'cancan:ability'
 
-# simple_form
-generate 'simple_form:install'
-
-# nifty-generators
-generate 'nifty:config'
-generate 'nifty:layout --haml'
+# twitter bootstrap things
+generate 'bootstrap:install'
+generate 'bootstrap:layout application fixed'
 remove_file 'app/views/layouts/application.html.erb'
+
+# simple_form
+generate 'simple_form:install --bootstrap'
 
 # rspec
 generate 'rspec:install'
@@ -116,14 +124,6 @@ remove_file 'rm public/images/rails.png'
 
 generate :controller, 'home index'
 gsub_file 'config/routes.rb', /get \"home\/index\"/, 'root to: "home#index"'
-
-rake "db:create", :env => 'development'
-rake "db:create", :env => 'test'
-
-run "db:migrate"
-
-run 'cp config/database.yml config/database.example'
-run "echo 'config/database.yml' >> .gitignore"
 
 # ==============
 # = Git commit =
